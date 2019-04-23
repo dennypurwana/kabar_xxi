@@ -1,11 +1,3 @@
-//
-//  MostCommentedViewController.swift
-//  KabarXXI_
-//
-//  Created by Emerio-Mac2 on 18/04/19.
-//  Copyright © 2019 Emerio-Mac2. All rights reserved.
-//
-
 import UIKit
 
 class MostCommentedViewController: UITableViewController {
@@ -29,8 +21,7 @@ class MostCommentedViewController: UITableViewController {
         
         newsProviderServices.request(.getLatestNews()) { [weak self] result in
             guard case self = self else { return }
-            
-            // 3
+        
             switch result {
             case .success(let response):
                 do {
@@ -39,7 +30,7 @@ class MostCommentedViewController: UITableViewController {
                         response.data)
                     self?.newsArray = responses.data
                     self?.mostCommentTableView.reloadData()
-                    print("refreshhh")
+                
                 } catch let parsingError {
                     print("Error", parsingError)
                 }
@@ -84,7 +75,7 @@ class MostCommentedViewController: UITableViewController {
         
         let newsData = newsArray[indexPath.item]
         
-        showDetailNewsController(with: newsData.title, with: newsData.createdDate, with: newsData.base64Image, with: newsData.description)
+        showDetailNewsController(with: newsData.title, with: newsData.createdDate, with: newsData.base64Image, with: newsData.description,with:newsData.keyword)
         
     }
     

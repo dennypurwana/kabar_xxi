@@ -6,7 +6,7 @@ import CarbonKit
 class HomeViewController: UIViewController
 , CarbonTabSwipeNavigationDelegate
 {
-   let items = ["Terbaru", "Berita Utama", "Most Popular", "Most Commented","Tips"]
+   let items = ["Terbaru", "Berita Utama", "Berita Populer", "Opini","Tips"]
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -27,7 +27,7 @@ class MostPopularViewController: UITableViewController {
     
     func loadNews() {
         
-        newsProviderServices.request(.getLatestNews()) { [weak self] result in
+        newsProviderServices.request(.getPopularNews()) { [weak self] result in
             guard case self = self else { return }
             
             // 3
@@ -84,7 +84,7 @@ class MostPopularViewController: UITableViewController {
         
         let newsData = newsArray[indexPath.item]
         
-        showDetailNewsController(with: newsData.title, with: newsData.createdDate, with: newsData.base64Image, with: newsData.description)
+        showDetailNewsController(with: newsData.title, with: newsData.createdDate, with: newsData.base64Image, with: newsData.description,with:newsData.keyword)
         
     }
     

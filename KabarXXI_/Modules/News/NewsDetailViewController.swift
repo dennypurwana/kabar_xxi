@@ -22,7 +22,7 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet var descNews: UILabel!
     
      var newsArray: [News] = []
-    
+    var keyword: String?
     var titleNews_: String?
     var newsDescriptions_: String?
     var imageNews_ : String = ""
@@ -40,7 +40,7 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
         let imageUrl = Constant.ApiUrlImage+"\(imageNews_)"
         print(imageUrl)
         imageNews.kf.setImage(with: URL(string: imageUrl))
-        loadNews()
+        loadNews(keyword ?? "")
         
     }
     
@@ -58,12 +58,12 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        loadNews()
+        loadNews(keyword ?? "")
     }
     
-    func loadNews() {
-        
-        newsProviderServices.request(.getLatestNews()) { [weak self] result in
+    func loadNews(_ keyword: String) {
+        print(keyword)
+        newsProviderServices.request(.getRelatedNews(keyword: keyword)) { [weak self] result in
             guard case self = self else { return }
             
             // 3
@@ -78,6 +78,7 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
                     let decoder = JSONDecoder()
                     let responses = try decoder.decode(NewsResponse.self, from:
                         response.data)
+                    print(responses)
                     self?.newsArray = responses.data
                     self?.relatedNewsTableView.reloadData()
                     print("refreshhh")
@@ -128,7 +129,7 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
 // MARK: - UIViewController
 extension UIViewController {
     
-    func showDetailNewsController(with title: String, with createdDate: String, with imageNews: String, with description: String) {
+    func showDetailNewsController(with title: String, with createdDate: String, with imageNews: String, with description: String,with keyword: String) {
         
         let storyboard = UIStoryboard(name: "News", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "newsDetail") as! NewsDetailViewController
@@ -136,6 +137,7 @@ extension UIViewController {
         vc.imageNews_ = imageNews
         vc.titleNews_ = title
         vc.createdDate_ = createdDate
+        vc.keyword = keyword
         navigationController?.pushViewController(vc, animated: true)
         
     }

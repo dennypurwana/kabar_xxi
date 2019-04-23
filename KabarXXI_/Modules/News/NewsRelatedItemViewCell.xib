@@ -19,25 +19,30 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="80.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="perang perang ala amin rais " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMh-VX-9Mc">
-                        <rect key="frame" x="16" y="11" width="288" height="19.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="perang perang ala amin rais " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMh-VX-9Mc">
+                        <rect key="frame" x="16" y="11" width="288" height="20"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="20 Maret 2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXa-33-JHh">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 Maret 2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXa-33-JHh">
                         <rect key="frame" x="16" y="38" width="288" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="6HY-DA-uH5"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="YXa-33-JHh" firstAttribute="leading" secondItem="KMh-VX-9Mc" secondAttribute="leading" id="2xo-dp-P7U"/>
                     <constraint firstAttribute="trailing" secondItem="KMh-VX-9Mc" secondAttribute="trailing" constant="16" id="Gwt-26-hNP"/>
                     <constraint firstItem="KMh-VX-9Mc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="OOi-nB-Ecb"/>
-                    <constraint firstAttribute="bottom" secondItem="YXa-33-JHh" secondAttribute="bottom" constant="28.5" id="npK-g4-ibw"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="YXa-33-JHh" secondAttribute="bottom" constant="18" id="V3k-tL-jNP"/>
+                    <constraint firstItem="YXa-33-JHh" firstAttribute="trailing" secondItem="KMh-VX-9Mc" secondAttribute="trailing" id="VTX-E1-bLV"/>
+                    <constraint firstItem="YXa-33-JHh" firstAttribute="top" secondItem="KMh-VX-9Mc" secondAttribute="bottom" constant="7" id="bez-eZ-xka"/>
                     <constraint firstItem="KMh-VX-9Mc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ozd-68-CrZ"/>
-                    <constraint firstItem="YXa-33-JHh" firstAttribute="firstBaseline" secondItem="KMh-VX-9Mc" secondAttribute="baseline" constant="23" id="wYq-65-Olm"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

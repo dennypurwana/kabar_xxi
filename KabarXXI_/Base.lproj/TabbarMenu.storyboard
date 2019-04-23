@@ -274,7 +274,7 @@
         <scene sceneID="vsT-iM-dkx">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DkZ-Vg-WUj" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Category" image="message" id="0Cu-4D-gCk"/>
+                    <tabBarItem key="tabBarItem" title="Category" image="category" id="0Cu-4D-gCk"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Jwf-tQ-Xkm">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -320,7 +320,7 @@
         <scene sceneID="kVy-mo-FcS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hei-YV-kqJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="calculator" id="o9q-td-qRb">
+                    <tabBarItem key="tabBarItem" title="Home" image="home" id="o9q-td-qRb">
                         <color key="badgeColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -385,8 +385,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="calculator" width="30" height="30"/>
-        <image name="message" width="30" height="30"/>
+        <image name="category" width="22.5" height="22.5"/>
+        <image name="home" width="22.5" height="22.5"/>
         <image name="play" width="30" height="30"/>
         <image name="udacity_banner" width="400" height="210"/>
         <image name="user_male" width="30" height="30"/>

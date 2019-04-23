@@ -16,6 +16,7 @@ target 'KabarXXI_' do
   pod 'Firebase/Messaging'
   pod 'XLPagerTabStrip', '~> 9.0'
   pod 'CarbonKit'
+  pod 'Floaty', '~> 4.1.0'
 
 
   target 'KabarXXI_Tests' do

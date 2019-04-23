@@ -40,7 +40,7 @@
                         <color key="textColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bell" translatesAutoresizingMaskIntoConstraints="NO" id="zHD-Z9-Quf">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="zHD-Z9-Quf">
                         <rect key="frame" x="279" y="58.5" width="30" height="30"/>
                     </imageView>
                 </subviews>
@@ -69,6 +69,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="bell" width="30" height="30"/>
+        <image name="star" width="30" height="30"/>
     </resources>
 </document>

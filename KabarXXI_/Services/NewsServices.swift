@@ -11,6 +11,8 @@ enum NewsServices{
     case getMainNews()
     case getPopularNews()
     case getCategory()
+    case getRelatedNews(keyword:String)
+    case getNewsByCategory(categoryName:String)
     
 }
 
@@ -31,28 +33,26 @@ extension NewsServices :TargetType{
         case .getPopularNews:
             return "/news/popular"
             
+        case .getRelatedNews(let keyword):
+            return "/news/related/\(keyword)"
+            
+        case .getNewsByCategory(let categoryName):
+            return "/news/newsByCategory/\(categoryName)"
+       
         case .getCategory:
             return "/category"
+            
     
         }
     }
     
     var method: Moya.Method {
         switch self {
-       
-        case .getCategory:
+//        case .upload:
+//            return .post
+//
+        default:
             return .get
-
-        case .getLatestNews:
-            return .get
-            
-        case .getMainNews:
-            return .get
-            
-        case .getPopularNews:
-            return .get
-            
-
         }
     }
     
@@ -87,7 +87,25 @@ extension NewsServices :TargetType{
                 encoding: URLEncoding.default
             )
         
+        case .getRelatedNews(_):
+            let parameters: [String: Any] =
+                [:]
+            return .requestParameters(
+                parameters: parameters,
+                encoding: URLEncoding.default
+            )
+            
+        case .getNewsByCategory(_):
+            let parameters: [String: Any] =
+                [:]
+            return .requestParameters(
+                parameters: parameters,
+                encoding: URLEncoding.default
+            )
+            
         }
+        
+      
         
     }
     

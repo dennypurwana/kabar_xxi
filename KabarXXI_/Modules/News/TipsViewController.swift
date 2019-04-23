@@ -13,6 +13,7 @@ class TipsViewController: UITableViewController {
     @IBOutlet var tipsTableView: UITableView!
     
     var newsArray: [News] = []
+    var category:String = "tips"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +27,8 @@ class TipsViewController: UITableViewController {
     }
     
     func loadNews() {
-        
-        newsProviderServices.request(.getLatestNews()) { [weak self] result in
+       print(category)
+        newsProviderServices.request(.getNewsByCategory(categoryName: category)) { [weak self] result in
             guard case self = self else { return }
             
             // 3
@@ -84,7 +85,7 @@ class TipsViewController: UITableViewController {
         
         let newsData = newsArray[indexPath.item]
         
-        showDetailNewsController(with: newsData.title, with: newsData.createdDate, with: newsData.base64Image, with: newsData.description)
+        showDetailNewsController(with: newsData.title, with: newsData.createdDate, with: newsData.base64Image, with: newsData.description,with:newsData.keyword)
         
     }
     
@@ -94,4 +95,19 @@ class TipsViewController: UITableViewController {
         
     }
 
+}
+
+
+
+// MARK: - UIViewController
+extension UIViewController {
+    
+    func showNewsByCategoryController(with categoryName: String) {
+        
+        let storyboard = UIStoryboard(name: "News", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "newsTips") as! TipsViewController
+        vc.category = categoryName
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
 }

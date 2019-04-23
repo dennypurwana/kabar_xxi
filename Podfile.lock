@@ -34,6 +34,7 @@ PODS:
     - GoogleUtilities/Reachability (~> 5.3)
     - GoogleUtilities/UserDefaults (~> 5.3)
     - Protobuf (~> 3.1)
+  - Floaty (4.1.0)
   - GoogleAppMeasurement (5.8.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -86,6 +87,7 @@ DEPENDENCIES:
   - CarbonKit
   - Firebase/Core
   - Firebase/Messaging
+  - Floaty (~> 4.1.0)
   - KeychainSwift (~> 14.0)
   - Kingfisher (~> 4.0)
   - Moya/RxSwift (~> 13.0)
@@ -103,6 +105,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - FirebaseMessaging
+    - Floaty
     - GoogleAppMeasurement
     - GoogleUtilities
     - KeychainSwift
@@ -126,6 +129,7 @@ SPEC CHECKSUMS:
   FirebaseCore: f1a9a8be1aee4bf71a2fc0f4096df6788bdfda61
   FirebaseInstanceID: a122b0c258720cf250551bb2bedf48c699f80d90
   FirebaseMessaging: 4235f949ce1c4e827aeb19705ba5c53f9b85aa10
+  Floaty: 1a4e213f3512cf3045ef9cb0c1ff456226d1f66a
   GoogleAppMeasurement: ffe513e90551844a739e7bcbb1d2aca1c28a4338
   GoogleUtilities: f44b068df02195da10409f415bd8c98439cd70fa
   KeychainSwift: d3cce449feb5198907aa3c50ae7409fdbd9d3e20
@@ -140,6 +144,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: c132d6d5851daff229ab4a1060ccf70a05a051c9
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: e02300eb295d9076d1ef8640ddc1848748fa0902
+PODFILE CHECKSUM: 966f72c326064187ce9720fcb8e493980b184ad2
 
 COCOAPODS: 1.7.0.beta.3
