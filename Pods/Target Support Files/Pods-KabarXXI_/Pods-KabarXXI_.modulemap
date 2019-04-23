@@ -1,0 +1,6 @@
+framework module Pods_KabarXXI_ {
+  umbrella header "Pods-KabarXXI_-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module Pods_KabarXXI_UITests {
+  umbrella header "Pods-KabarXXI_UITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
