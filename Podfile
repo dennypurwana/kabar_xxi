@@ -17,6 +17,8 @@ target 'KabarXXI_' do
   pod 'XLPagerTabStrip', '~> 9.0'
   pod 'CarbonKit'
   pod 'Floaty', '~> 4.1.0'
+  pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/Buttons+ButtonThemer'
 
 
   target 'KabarXXI_Tests' do

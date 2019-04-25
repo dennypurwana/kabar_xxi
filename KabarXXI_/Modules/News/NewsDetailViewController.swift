@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Floaty
+
 
 class NewsDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate   {
     
@@ -21,26 +23,46 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
     
     @IBOutlet var descNews: UILabel!
     
-     var newsArray: [News] = []
+    @IBOutlet var category: UILabel!
+    
+    @IBOutlet var floaty: Floaty!
+    let floaty_ = Floaty()
+    
+    var newsArray: [News] = []
     var keyword: String?
     var titleNews_: String?
     var newsDescriptions_: String?
     var imageNews_ : String = ""
     var createdDate_ : String = ""
+    var category_ : String = ""
+    var idNews_:Int = 0
     var releaseDate: Date = Date(timeIntervalSince1970: 0)
-    
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
-         self.navigationItem.title = "Detail Berita"
+        setupViews()
+       
+        
+    }
+    
+    
+    func setupViews(){
+        
+        self.navigationItem.title = "Detail Berita"
         titleNews.text = titleNews_
         descNews.htmlToString(html: newsDescriptions_ ?? "")
         releaseDate = createdDate_.date(with: "yyyy-MM-dd")
         createdDate.text = releaseDate.string(with: "yyyy-MM-dd")
+        category.text = category_
         let imageUrl = Constant.ApiUrlImage+"\(imageNews_)"
-        print(imageUrl)
         imageNews.kf.setImage(with: URL(string: imageUrl))
+        floaty.addItem(title: "Komentar")
+        floaty.addItem(title: "Share")
+        self.view.addSubview(floaty)
+        updateViews(idNews_)
         loadNews(keyword ?? "")
+        
         
     }
     
@@ -61,6 +83,23 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
         loadNews(keyword ?? "")
     }
     
+    
+    func updateViews(_ id: Int) {
+        print(id)
+        newsProviderServices.request(.updateViews(id)) { [weak self] result in
+            guard case self = self else { return }
+            switch result {
+            case .success(let response):
+                
+                    print(response)
+            
+            case .failure: break
+            }
+        
+        }
+        
+    }
+    
     func loadNews(_ keyword: String) {
         print(keyword)
         newsProviderServices.request(.getRelatedNews(keyword: keyword)) { [weak self] result in
@@ -71,17 +110,12 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
             case .success(let response):
                 do {
                     
-                    //                    let jsonResponse = try JSONSerialization.jsonObject(with:
-                    //                        response.data, options: [])
-                    //                    print(jsonResponse)
-                    //Response result
                     let decoder = JSONDecoder()
                     let responses = try decoder.decode(NewsResponse.self, from:
                         response.data)
                     print(responses)
                     self?.newsArray = responses.data
                     self?.relatedNewsTableView.reloadData()
-                    print("refreshhh")
                     
                 } catch let parsingError {
                     print("Error", parsingError)
@@ -114,6 +148,15 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
+    
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let newsData = newsArray[indexPath.item]
+        
+        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image, with: newsData.description,with: newsData.keyword,with:newsData.category?.categoryName ?? "")
+        
+    }
+    
      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     
             return 100
@@ -129,15 +172,17 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
 // MARK: - UIViewController
 extension UIViewController {
     
-    func showDetailNewsController(with title: String, with createdDate: String, with imageNews: String, with description: String,with keyword: String) {
+    func showDetailNewsController(with idNews: Int,with title: String, with createdDate: String, with imageNews: String, with description: String,with keyword: String,with categoryName: String) {
         
         let storyboard = UIStoryboard(name: "News", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "newsDetail") as! NewsDetailViewController
+        vc.idNews_ = idNews
         vc.newsDescriptions_ = description
         vc.imageNews_ = imageNews
         vc.titleNews_ = title
         vc.createdDate_ = createdDate
         vc.keyword = keyword
+        vc.category_ = categoryName
         navigationController?.pushViewController(vc, animated: true)
         
     }

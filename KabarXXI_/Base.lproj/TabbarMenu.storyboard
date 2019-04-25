@@ -168,7 +168,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_male" translatesAutoresizingMaskIntoConstraints="NO" id="FPe-Xh-TpW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_male_round" translatesAutoresizingMaskIntoConstraints="NO" id="FPe-Xh-TpW">
                                 <rect key="frame" x="137.66666666666666" y="168" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="FPe-Xh-TpW" secondAttribute="height" multiplier="1:1" id="B6e-ls-g1K"/>
@@ -176,9 +176,9 @@
                                     <constraint firstAttribute="width" constant="100" id="mcq-X0-lTC"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lEQ-sl-a12">
-                                <rect key="frame" x="87.666666666666686" y="311" width="200" height="40"/>
-                                <color key="backgroundColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lEQ-sl-a12">
+                                <rect key="frame" x="94" y="294" width="200" height="40"/>
+                                <color key="backgroundColor" red="0.0046094055289999996" green="0.097117669879999993" blue="0.57474321129999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="XZ1-ct-mrW"/>
                                     <constraint firstAttribute="height" constant="40" id="eD3-o3-Xc5"/>
@@ -186,27 +186,33 @@
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginButtonTapped:" destination="jbG-sV-RDP" eventType="touchUpInside" id="IZp-Qa-nYh"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="belum punya akun?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsh-dj-XV0">
-                                <rect key="frame" x="87" y="372" width="106" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="belum punya akun?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsh-dj-XV0">
+                                <rect key="frame" x="94" y="350" width="106" height="14"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCA-ha-wEH">
-                                <rect key="frame" x="211" y="364" width="43" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCA-ha-wEH">
+                                <rect key="frame" x="208" y="342" width="43" height="30"/>
                                 <state key="normal" title="Daftar">
                                     <color key="titleColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="signUpButtonTapped:" destination="jbG-sV-RDP" eventType="touchUpInside" id="6Hd-io-pHG"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="tCA-ha-wEH" firstAttribute="leading" secondItem="vsh-dj-XV0" secondAttribute="trailing" constant="18" id="2Kf-sd-hTz"/>
+                            <constraint firstItem="tCA-ha-wEH" firstAttribute="leading" secondItem="vsh-dj-XV0" secondAttribute="trailing" constant="8" id="2Kf-sd-hTz"/>
                             <constraint firstItem="lEQ-sl-a12" firstAttribute="top" secondItem="FPe-Xh-TpW" secondAttribute="bottom" constant="43" id="92N-Rg-ReF"/>
                             <constraint firstItem="lEQ-sl-a12" firstAttribute="leading" secondItem="vsh-dj-XV0" secondAttribute="trailing" constant="-105.33333333333331" id="E9a-tQ-0MM"/>
-                            <constraint firstItem="tCA-ha-wEH" firstAttribute="top" secondItem="lEQ-sl-a12" secondAttribute="bottom" constant="13" id="OUU-Fw-z9i"/>
-                            <constraint firstItem="tCA-ha-wEH" firstAttribute="firstBaseline" secondItem="vsh-dj-XV0" secondAttribute="firstBaseline" id="haN-09-eCO"/>
+                            <constraint firstItem="tCA-ha-wEH" firstAttribute="top" secondItem="lEQ-sl-a12" secondAttribute="bottom" constant="8" id="OUU-Fw-z9i"/>
+                            <constraint firstItem="tCA-ha-wEH" firstAttribute="firstBaseline" secondItem="vsh-dj-XV0" secondAttribute="firstBaseline" constant="1" id="haN-09-eCO"/>
                             <constraint firstItem="vsh-dj-XV0" firstAttribute="top" secondItem="lEQ-sl-a12" secondAttribute="bottom" constant="21" id="ioO-2r-vwB"/>
                             <constraint firstItem="FPe-Xh-TpW" firstAttribute="centerX" secondItem="fDX-ww-6cw" secondAttribute="centerX" id="jDE-HF-D8B"/>
                             <constraint firstItem="lEQ-sl-a12" firstAttribute="firstBaseline" secondItem="FPe-Xh-TpW" secondAttribute="baseline" constant="68.333333333333314" id="lPZ-rp-LuQ"/>
@@ -218,6 +224,10 @@
                     <navigationItem key="navigationItem" id="AOe-jf-V65"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1000"/>
+                    <connections>
+                        <outlet property="loginButton" destination="lEQ-sl-a12" id="2dV-Ni-WVO"/>
+                        <outlet property="signUpButton" destination="tCA-ha-wEH" id="Jld-k1-3gN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v2v-HM-THS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -258,6 +268,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
@@ -281,6 +292,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
@@ -304,6 +316,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
@@ -329,7 +342,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
@@ -385,10 +398,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="category" width="22.5" height="22.5"/>
-        <image name="home" width="22.5" height="22.5"/>
+        <image name="category" width="26.666666030883789" height="26.666666030883789"/>
+        <image name="home" width="26.666666030883789" height="26.666666030883789"/>
         <image name="play" width="30" height="30"/>
         <image name="udacity_banner" width="400" height="210"/>
         <image name="user_male" width="30" height="30"/>
+        <image name="user_male_round" width="154.28572082519531" height="154.28572082519531"/>
     </resources>
 </document>

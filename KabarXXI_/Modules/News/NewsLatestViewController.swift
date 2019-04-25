@@ -6,6 +6,7 @@ import UIScrollView_InfiniteScroll
 import RealmSwift
 import CoreSpotlight
 import MobileCoreServices
+
 class NewsLatestViewController: UITableViewController {
 
     @IBOutlet var newsTableView: UITableView!
@@ -16,24 +17,32 @@ class NewsLatestViewController: UITableViewController {
     
      let disposeBag = DisposeBag()
     
+    var totalPage = 0
+    var page = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tes : String = "denny21121993"
+        print("md 5 :\(String(describing: tes.encryptToMD5!))")
         setupViews()
         refreshControl_!.beginRefreshing()
-        loadNews()
+        loadNews(page)
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadNews()
+        loadNews(page)
     }
     
     @objc func refresh(_ sender: UIRefreshControl) {
        
-        loadNews()
+        loadNews(page)
         
     }
+    
     
     func setupViews() {
         
@@ -41,30 +50,43 @@ class NewsLatestViewController: UITableViewController {
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         newsTableView.addSubview(refreshControl)
         self.refreshControl_ = refreshControl
-        self.loadNews()
+        newsTableView.addInfiniteScroll { (newsTableView) in
+            self.loadNews(self.page + 1)
+        }
+        
+        newsTableView.setShouldShowInfiniteScrollHandler { (newsTableView) -> Bool in
+            return self.page < self.totalPage
+        }
+        
+        
+        
+       // self.loadNews()
     }
     
-    func loadNews() {
-        
-        newsProviderServices.request(.getLatestNews()) { [weak self] result in
+    func loadNews(_ page:Int) {
+        newsProviderServices.request(.getLatestNews(page)) { [weak self] result in
             guard case self = self else { return }
             
             // 3
             switch result {
             case .success(let response):
                 do {
-                    
-//                    let jsonResponse = try JSONSerialization.jsonObject(with:
-//                        response.data, options: [])
-//                    print(jsonResponse)
-                    //Response result
+                  
                     let decoder = JSONDecoder()
                     let responses = try decoder.decode(NewsResponse.self, from:
                         response.data)
-                    self?.newsArray = responses.data
+                    
+                    if page == 0 {
+                        self?.newsArray = responses.data
+                    }
+                    else {
+                        self?.newsArray.append(contentsOf: responses.data)
+                    }
+                    
+                    self?.totalPage = self?.newsArray.count ?? 0/10
+                    self?.page = page
                     self?.newsTableView.reloadData()
-                    print("refreshhh")
-                 
+                    
                 } catch let parsingError {
                     print("Error", parsingError)
                 }
@@ -94,11 +116,12 @@ class NewsLatestViewController: UITableViewController {
             let cell = Bundle.main.loadNibNamed("NewsHeaderTableViewCell", owner: self, options: nil)?.first as! NewsHeaderTableViewCell
             
             let news_ = newsArray[indexPath.row]
-            print(news_.title)
+            print(news_.title as Any)
             let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image)"
             cell.imageNews.kf.setImage(with: URL(string: imageUrl))
             cell.titleNews.text = news_.title
             cell.dateNews.text = news_.createdDate
+            cell.totalViews.text = "\(news_.views!) dilihat"
             
             return cell
             
@@ -110,11 +133,11 @@ class NewsLatestViewController: UITableViewController {
         let cell = Bundle.main.loadNibNamed("NewsItemTableViewCell", owner: self, options: nil)?.first as! NewsItemTableViewCell
         
         let news_ = newsArray[indexPath.row]
-        print(news_.title)
         let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image)"
         cell.imageNews.kf.setImage(with: URL(string: imageUrl))
         cell.titleNews.text = news_.title
         cell.dateNews.text = news_.createdDate
+        cell.totalViews.text = "\(news_.views!) dilihat"
         
         return cell
             
@@ -127,7 +150,7 @@ class NewsLatestViewController: UITableViewController {
         
         let newsData = newsArray[indexPath.item]
         
-        showDetailNewsController(with: newsData.title, with: newsData.createdDate, with: newsData.base64Image, with: newsData.description,with: newsData.keyword)
+        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image, with: newsData.description,with: newsData.keyword,with:newsData.category?.categoryName ?? "")
         
     }
     
@@ -139,7 +162,7 @@ class NewsLatestViewController: UITableViewController {
             
         }
         else  {
-            return 100
+            return 120
         }
     }
     

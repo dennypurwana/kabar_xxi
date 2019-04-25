@@ -3,15 +3,24 @@ import Foundation
 import Moya
 import UIKit
 
-let providerUserService = MoyaProvider<UserServices>()
+let providerUserService = MoyaProvider<UserServices>(
+    plugins: [CredentialsPlugin { _ -> URLCredential? in
+        return URLCredential(user: "kabarxxi-client-portal", password: "VlVjNWVXUkhSbk5WZWs1cVkycE9NRWt3Um5waFJFVjVUVlJWTVUxcVdUSk5lbXQ1VFVSVk1VNW5QVDA9VlVjNWVXUkhSbk5WZWs1cVkycE9NRQ==", persistence: .none)
+        }
+    ])
 
 enum UserServices{
     case createUser(  username:String,  email:String,  phone:String, password:String)
     case loginUser(username:String,password:String)
-    case getUserById(userId:String)
+    case getUserByUsername(username:String)
 }
 
+
+
 extension UserServices :TargetType{
+
+    
+    
     var baseURL: URL {
         return URL(string: Constant.ApiUrl)!
     }
@@ -19,13 +28,13 @@ extension UserServices :TargetType{
     var path: String {
         switch self {
         case .createUser:
-            return "/register.php"
+            return "/public/v1/users"
             
         case .loginUser:
-            return "/login.php"
+            return "/oauth/token"
             
-        case .getUserById:
-            return "/getProfile.php"
+        case .getUserByUsername:
+            return "/user"
         
         }
     }
@@ -34,6 +43,10 @@ extension UserServices :TargetType{
         switch self {
         case .createUser:
             return .post
+            
+        case .loginUser:
+            return .post
+            
         default:
             return .get
         }
@@ -48,23 +61,35 @@ extension UserServices :TargetType{
        
         case .createUser(let username, let email, let phone, let password):
             return .requestParameters(
-                parameters: ["username": username,"email": email,"phone": phone,"password": password,],
-                encoding: URLEncoding.default
+                parameters: [
+                   
+                    "username": username,
+                    "email": email,
+                    "phoneNumber": phone,
+                    "password": password.encryptToMD5!,
+                    "roleId":2
+            
+                    ],
+                
+                encoding: JSONEncoding.default
             )
             
         case .loginUser(let username, let password):
             let parameters: [String: Any] = [
+               
                 "username": username,
-                "password": password,
+                "password": password.encryptToMD5!,
+                "grant_type":"password"
+                
             ]
             return .requestParameters(
                 parameters: parameters,
                 encoding: URLEncoding.default
             )
            
-        case .getUserById(let userid):
+        case .getUserByUsername(let username):
             let parameters: [String: Any] = [
-                "user_id": userid
+                "username": username
             ]
             return .requestParameters(
                 parameters: parameters,

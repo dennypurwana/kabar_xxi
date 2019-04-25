@@ -10,13 +10,36 @@ class HomeViewController: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "KabarXXI"
-       
-        let carbonTabSwipeNavigation = CarbonTabSwipeNavigation(items: items, delegate: self)
-        carbonTabSwipeNavigation.insert(intoRootViewController: self)
+        
+        setupNavBar()
+        setupTabbarNews()
+        
       
     }
     
+    
+    func setupNavBar(){
+        
+            let logoImage = UIImage.init(named: "logo_kabar")
+            let logoImageView = UIImageView.init(image: logoImage)
+            logoImageView.frame = CGRect(x: 0, y: 0, width: 100, height: 10)
+            logoImageView.contentMode = .scaleAspectFit
+            let imageItem = UIBarButtonItem.init(customView: logoImageView)
+            let negativeSpacer = UIBarButtonItem.init(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+            negativeSpacer.width = -25
+            navigationItem.leftBarButtonItems = [negativeSpacer, imageItem]
+        
+    }
+    
+    
+    func setupTabbarNews(){
+        
+        let carbonTabSwipeNavigation = CarbonTabSwipeNavigation(items: items, delegate: self)
+        carbonTabSwipeNavigation.setNormalColor(.darkGray)
+        carbonTabSwipeNavigation.setSelectedColor(.black)
+        carbonTabSwipeNavigation.insert(intoRootViewController: self)
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

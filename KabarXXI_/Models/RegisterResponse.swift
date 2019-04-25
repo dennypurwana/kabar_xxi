@@ -8,6 +8,6 @@
 
 import Foundation
 struct RegisterResponse : Codable {
-    let success:Bool
-    let message:String
+    let status:Int?
+    let message:String?
 }

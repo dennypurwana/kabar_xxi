@@ -7,12 +7,13 @@ let newsProviderServices = MoyaProvider<NewsServices>()
 
 enum NewsServices{
    
-    case getLatestNews()
-    case getMainNews()
-    case getPopularNews()
+    case getLatestNews(Int)
+    case getMainNews(Int)
+    case getPopularNews(Int)
     case getCategory()
     case getRelatedNews(keyword:String)
-    case getNewsByCategory(categoryName:String)
+    case getNewsByCategory(page:Int,categoryName:String)
+    case updateViews(Int)
     
 }
 
@@ -25,22 +26,25 @@ extension NewsServices :TargetType{
         switch self {
        
         case .getLatestNews:
-            return "/news/latest"
+            return "/public/v1/news/latest"
        
         case .getMainNews:
-            return "/news/main"
+            return "/public/v1/news/main"
             
         case .getPopularNews:
-            return "/news/popular"
+            return "/public/v1/news/popular"
             
         case .getRelatedNews(let keyword):
-            return "/news/related/\(keyword)"
+            return "/public/v1/news/related/\(keyword)"
             
-        case .getNewsByCategory(let categoryName):
-            return "/news/newsByCategory/\(categoryName)"
+        case .getNewsByCategory( _,let categoryName):
+            return "/public/v1/news/newsByCategory/\(categoryName)"
        
         case .getCategory:
-            return "/category"
+            return "/public/v1/category"
+            
+        case .updateViews(let id):
+            return "/public/v1/news/\(id)"
             
     
         }
@@ -48,9 +52,10 @@ extension NewsServices :TargetType{
     
     var method: Moya.Method {
         switch self {
-//        case .upload:
-//            return .post
-//
+            
+        case .updateViews:
+            return .put
+
         default:
             return .get
         }
@@ -63,21 +68,39 @@ extension NewsServices :TargetType{
     var task: Task {
         switch self {
 
-        case .getLatestNews():
+        case .getLatestNews(let page):
             return .requestParameters(
-                parameters: [:],
+                parameters: [
+                    
+                    "sort": "createdDate,DESC",
+                    "size": 10,
+                    "page": page
+                    
+                ],
                 encoding: URLEncoding.default
             )
             
-        case .getMainNews():
+        case .getMainNews(let page):
             return .requestParameters(
-                parameters: [:],
+                parameters: [
+                    
+                    "sort": "createdDate,DESC",
+                    "size": 10,
+                    "page": page
+                    
+                ],
                 encoding: URLEncoding.default
             )
             
-        case .getPopularNews():
+        case .getPopularNews(let page):
             return .requestParameters(
-                parameters: [:],
+                parameters: [
+                    
+                    "sort": "createdDate,DESC",
+                    "size": 10,
+                    "page": page
+                
+                ],
                 encoding: URLEncoding.default
             )
             
@@ -86,6 +109,8 @@ extension NewsServices :TargetType{
                 parameters: [:],
                 encoding: URLEncoding.default
             )
+            
+            
         
         case .getRelatedNews(_):
             let parameters: [String: Any] =
@@ -95,11 +120,21 @@ extension NewsServices :TargetType{
                 encoding: URLEncoding.default
             )
             
-        case .getNewsByCategory(_):
-            let parameters: [String: Any] =
-                [:]
+        case .getNewsByCategory(let page,_):
             return .requestParameters(
-                parameters: parameters,
+                parameters: [
+                    
+                    "sort": "createdDate,DESC",
+                    "size": 10,
+                    "page": page
+                    
+                ],
+                encoding: URLEncoding.default
+            )
+            
+        case .updateViews(_):
+            return .requestParameters(
+                parameters: [:],
                 encoding: URLEncoding.default
             )
             

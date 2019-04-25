@@ -8,12 +8,10 @@
 
 import Foundation
 struct User : Codable {
+    
     let username:String
     let email:String
-    let phone:String
-    let address:String
-    let instagram:String
-    let facebook:String
-    let image_user:String
-    let encrypted_password:String
+    let phoneNumber:String
+    let password:String
+    
 }

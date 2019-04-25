@@ -5,10 +5,10 @@ class MostCommentedViewController: UITableViewController {
     @IBOutlet var mostCommentTableView: UITableView!
     
     var newsArray: [News] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadNews()
+       
         
     }
     
@@ -18,8 +18,8 @@ class MostCommentedViewController: UITableViewController {
     }
     
     func loadNews() {
-        
-        newsProviderServices.request(.getLatestNews()) { [weak self] result in
+         let page:Int = 0
+        newsProviderServices.request(.getLatestNews(page)) { [weak self] result in
             guard case self = self else { return }
         
             switch result {
@@ -57,14 +57,15 @@ class MostCommentedViewController: UITableViewController {
         
         self.mostCommentTableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
         print("tes",indexPath.row)
-        let cell = Bundle.main.loadNibNamed("NewsItemTableViewCell", owner: self, options: nil)?.first as! NewsItemTableViewCell
+        let cell = Bundle.main.loadNibNamed("NewsHeaderTableViewCell", owner: self, options: nil)?.first as! NewsHeaderTableViewCell
         
         let news_ = newsArray[indexPath.row]
-        print(news_.title)
+        print(news_.title ?? "")
         let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image)"
         cell.imageNews.kf.setImage(with: URL(string: imageUrl))
         cell.titleNews.text = news_.title
         cell.dateNews.text = news_.createdDate
+        cell.totalViews.text = "\(news_.views!) dilihat"
         
         return cell
         
@@ -75,13 +76,13 @@ class MostCommentedViewController: UITableViewController {
         
         let newsData = newsArray[indexPath.item]
         
-        showDetailNewsController(with: newsData.title, with: newsData.createdDate, with: newsData.base64Image, with: newsData.description,with:newsData.keyword)
+        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image, with: newsData.description,with:newsData.keyword,with:newsData.category?.categoryName ?? "")
         
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 100
+        return 250
         
     }
 

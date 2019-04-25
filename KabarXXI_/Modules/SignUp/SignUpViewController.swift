@@ -27,31 +27,34 @@ class SignUpViewController: UIViewController, UITextFieldDelegate{
         txfPhone.delegate = self
         txfPassword.delegate = self
         txfConfirmPassword.delegate = self
+        self.navigationItem.title = "Sign Up"
         // Do any additional setup after loading the view.
     }
 
     
     func signUp(_ username: String,_ email: String,_ phone: String,_ password: String) {
+        
+        
         providerUserService.request(UserServices.createUser(username: username, email: email, phone: phone, password: password)) { (result) in
             switch result {
             case .success(let response):
                 do {
-                    //here dataResponse received from a network request
+    
                     let decoder = JSONDecoder()
                     let responseRegister = try decoder.decode(RegisterResponse.self, from:
                         response.data) //Decode JSON Response Data
                     print(responseRegister)
-                    
-                    if (responseRegister.success){
+
+                    if (responseRegister.status == 200){
                         let  alert = UIAlertController(title: "Info", message:                 responseRegister.message, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
                             alert.dismiss(animated: true, completion: nil)
                             self.showLoginViewController()
                         }))
                         self.present(alert, animated: true, completion: nil)
-                       
+
                     }else{
-                        
+
                         let alert = UIAlertController(title: "Info", message: responseRegister.message, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
@@ -64,7 +67,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate{
             case .failure(let error):
             print("error : \(error)")
                 
-           }
+        }
         }
         
     }
@@ -91,6 +94,6 @@ extension UIViewController {
         
         let storyboard = UIStoryboard(name: "RootSign", bundle: nil)
         let nc = storyboard.instantiateViewController(withIdentifier: "register") as! SignUpViewController
-        present(nc, animated: true, completion: nil)
+        navigationController?.pushViewController(nc, animated: true)
     }
 }

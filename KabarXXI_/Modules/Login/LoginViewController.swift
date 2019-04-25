@@ -18,6 +18,7 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
         loginButton.layer.masksToBounds = true
         txfUsername.delegate = self
         txfPassword.delegate = self
+        self.navigationItem.title = "Login"
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,32 +32,41 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
     }
     
     func login(_ username: String,_ password: String) {
-        providerUserService.request(UserServices.loginUser(username: username,  password: password)) { (result) in
+        
+        providerUserService.request(UserServices.loginUser(username: username, password: password)) { (result) in
+            
             switch result {
             case .success(let response):
-                
-                    do {
-                        //here dataResponse received from a network request
-                        let decoder = JSONDecoder()
-                        let responseUser = try decoder.decode(UserResponse.self, from:
-                            response.data) //Decode JSON Response Data
-                        print(responseUser)
-                        guard let email = self.txfUsername.text, email == responseUser.user.username,
-                            let password = self.txfPassword.text, password == responseUser.user.encrypted_password else {
-                                let alert = UIAlertController(title: "Error", message: "Invalid email or password", preferredStyle: .alert)
-                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                               self.present(alert, animated: true, completion: nil)
-                                return
-                        }
-                        //self.showHomeViewController()
-                    } catch let parsingError {
-                        print("Error", parsingError)
+                do {
+                    
+                    print(response.statusCode)
+                    let decoder = JSONDecoder()
+                    let responseLogin = try decoder.decode(LoginResponse.self, from:
+                        response.data) //Decode JSON Response Data
+                    
+                    print(responseLogin)
+                    
+                    if(response.statusCode == 200){
+                        
+                        print(responseLogin.access_token ?? "")
+                        
+                        self.showProfileViewController()
+                        
+                    } else {
+                        
+                        let alert = UIAlertController(title: "Error", message: responseLogin.error_description, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        
                     }
-               
-                //let responseString = String(data: response.data, encoding: .utf8)
-                //print("response login: \(String(describing: responseString))")
+                    
+                   
+                    
+                } catch let parsingError {
+                    print("Error", parsingError)
+                }
             case .failure(let error):
-                print("error login: \(error)")
+                print("error : \(error)")
                 
             }
         }
@@ -69,6 +79,7 @@ extension UIViewController {
     func showLoginViewController() {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let nc = storyboard.instantiateViewController(withIdentifier: "login") as! LoginViewController
-        present(nc, animated: true, completion: nil)
+       // present(nc, animated: true, completion: nil)
+         navigationController?.pushViewController(nc, animated: true)
     }
 }

@@ -9,5 +9,5 @@
 import Foundation
 struct UserResponse : Codable {
     let error:Bool
-    let user:User
+    let data:User
 }

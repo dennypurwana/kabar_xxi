@@ -11,11 +11,11 @@ import Foundation
 import Foundation
 struct News : Codable {
     
-    let createdDate:String
-    let updatedDate:String
-   // let category:Category
-    let id:Int
-    let title:String
+    let createdDate:String?
+    let updatedDate:String?
+    let category:Category?
+    let id:Int?
+    let title:String?
     let releaseDate:String
     let base64Image:String
     let mimeType:String
@@ -24,9 +24,11 @@ struct News : Codable {
     let popular:Bool
     let keyword:String
     let description:String
-    let createdBy:String
-    let updateBy:String
-    let releaseBy:String
+    let createdBy:String?
+    let updateBy:String?
+    let releaseBy:String?
+    let views: Int!
+    
     
    
 }

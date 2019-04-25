@@ -84,7 +84,7 @@ class CategoryViewController: UIViewController , UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let categoryData = categoryArray[indexPath.item]
-        showNewsByCategoryController(with: categoryData.categoryName)
+        showNewsByCategoryController(with: categoryData.categoryName )
         
     }
     

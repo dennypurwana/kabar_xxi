@@ -61,6 +61,60 @@ PODS:
     - GoogleUtilities/Logger
   - KeychainSwift (14.0.0)
   - Kingfisher (4.10.1)
+  - MaterialComponents/AnimationTiming (81.1.0)
+  - MaterialComponents/Buttons (81.1.0):
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/Ripple
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Shapes
+    - MaterialComponents/Typography
+    - MDFInternationalization
+    - MDFTextAccessibility
+  - "MaterialComponents/Buttons+ButtonThemer (81.1.0)":
+    - MaterialComponents/Buttons
+    - "MaterialComponents/Buttons+ColorThemer"
+    - "MaterialComponents/Buttons+ShapeThemer"
+    - "MaterialComponents/Buttons+TypographyThemer"
+    - MaterialComponents/Palettes
+  - "MaterialComponents/Buttons+ColorThemer (81.1.0)":
+    - MaterialComponents/Buttons
+    - MaterialComponents/schemes/Color
+  - "MaterialComponents/Buttons+ShapeThemer (81.1.0)":
+    - MaterialComponents/Buttons
+    - MaterialComponents/schemes/Shape
+  - "MaterialComponents/Buttons+TypographyThemer (81.1.0)":
+    - MaterialComponents/Buttons
+    - MaterialComponents/schemes/Typography
+  - MaterialComponents/Ink (81.1.0):
+    - MaterialComponents/private/Math
+  - MaterialComponents/Palettes (81.1.0)
+  - MaterialComponents/private/Application (81.1.0)
+  - MaterialComponents/private/Math (81.1.0)
+  - MaterialComponents/Ripple (81.1.0):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/private/Math
+  - MaterialComponents/schemes/Color (81.1.0)
+  - MaterialComponents/schemes/Shape (81.1.0):
+    - MaterialComponents/ShapeLibrary
+    - MaterialComponents/Shapes
+  - MaterialComponents/schemes/Typography (81.1.0):
+    - MaterialComponents/Typography
+  - MaterialComponents/ShadowElevations (81.1.0)
+  - MaterialComponents/ShadowLayer (81.1.0):
+    - MaterialComponents/ShadowElevations
+  - MaterialComponents/ShapeLibrary (81.1.0):
+    - MaterialComponents/private/Math
+    - MaterialComponents/Shapes
+  - MaterialComponents/Shapes (81.1.0):
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowLayer
+  - MaterialComponents/Typography (81.1.0):
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/Math
+  - MDFInternationalization (2.0.0)
+  - MDFTextAccessibility (2.0.0)
   - Moya/Core (13.0.0):
     - Alamofire (~> 4.1)
     - Result (~> 4.1)
@@ -90,6 +144,8 @@ DEPENDENCIES:
   - Floaty (~> 4.1.0)
   - KeychainSwift (~> 14.0)
   - Kingfisher (~> 4.0)
+  - MaterialComponents/Buttons
+  - "MaterialComponents/Buttons+ButtonThemer"
   - Moya/RxSwift (~> 13.0)
   - RealmSwift
   - UIScrollView-InfiniteScroll (~> 1.0.0)
@@ -110,6 +166,9 @@ SPEC REPOS:
     - GoogleUtilities
     - KeychainSwift
     - Kingfisher
+    - MaterialComponents
+    - MDFInternationalization
+    - MDFTextAccessibility
     - Moya
     - nanopb
     - Protobuf
@@ -134,6 +193,9 @@ SPEC CHECKSUMS:
   GoogleUtilities: f44b068df02195da10409f415bd8c98439cd70fa
   KeychainSwift: d3cce449feb5198907aa3c50ae7409fdbd9d3e20
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  MaterialComponents: c2045515505992357e210b33cb3ffc3a404a14fd
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   Moya: 161263550064ff8a4948e8ff63137fd72a876292
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
@@ -144,6 +206,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: c132d6d5851daff229ab4a1060ccf70a05a051c9
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 966f72c326064187ce9720fcb8e493980b184ad2
+PODFILE CHECKSUM: 11338b23fbcace2260a29412c1cf09cda12e3434
 
 COCOAPODS: 1.7.0.beta.3

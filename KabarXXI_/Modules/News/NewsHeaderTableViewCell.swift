@@ -10,6 +10,8 @@ import UIKit
 
 class NewsHeaderTableViewCell: UITableViewCell {
     
+    @IBOutlet var totalViews: UILabel!
+    
     @IBOutlet var imageNews: UIImageView!
     
     @IBOutlet var titleNews: UILabel!

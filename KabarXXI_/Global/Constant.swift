@@ -10,8 +10,8 @@ import Foundation
 
 struct Constant {
     
-    static let ApiUrlLocal : String = "http://10.10.90.82/myServices"
-    static let ApiUrl : String = "http://10.10.90.168:8181/api/public/v1"
-    static let ApiUrlImage : String = "http://10.10.90.168/kabarxxi-uploads/data/image/"
+    static let ApiUrlLocal : String = "http://192.168.43.196/myServices"
+    static let ApiUrl : String = "http://192.168.43.72:8181/api"
+    static let ApiUrlImage : String = "http://192.168.43.72/kabarxxi-uploads/data/image/"
     
 }
