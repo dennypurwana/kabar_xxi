@@ -2,21 +2,49 @@
 
 import UIKit
 import CarbonKit
+import GoogleMobileAds
 
 class HomeViewController: UIViewController
-, CarbonTabSwipeNavigationDelegate
+, CarbonTabSwipeNavigationDelegate , GADInterstitialDelegate
 {
    let items = ["Terbaru", "Berita Utama", "Berita Populer", "Opini","Tips"]
     
+    
+    var interstitial : GADInterstitial!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavBar()
         setupTabbarNews()
+        interstitial = createAndLoadIntertitial()
         
+        if interstitial.isReady {
+            
+            interstitial.present(fromRootViewController: self)
+        
+        }
+        else {
+            
+            print("ads not ready")
+        }
       
     }
     
+    func createAndLoadIntertitial() -> GADInterstitial{
+        
+        var intertitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/3986624511")
+        intertitial.delegate = self
+        let request = GADRequest()
+        request.testDevices = [kGADSimulatorID]
+        intertitial.load(request)
+        
+        return intertitial
+        
+    }
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        interstitial = createAndLoadIntertitial()
+    }
     
     func setupNavBar(){
         

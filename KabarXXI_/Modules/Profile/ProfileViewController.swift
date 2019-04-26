@@ -2,9 +2,13 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    @IBOutlet var lblSignUp: UILabel!
+    
     @IBOutlet var loginButton: UIButton!
     
     @IBOutlet var signUpButton: UIButton!
+    
+    let userDefaults = UserDefaults.standard
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         
@@ -20,14 +24,30 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Profile"
+        checkLogin()
+    }
+    
+    
+    func checkLogin(){
         
+        let isLogin = userDefaults.bool(forKey: "isLogin")
         loginButton.layer.cornerRadius = 6
         loginButton.layer.masksToBounds = true
-
+        if(isLogin){
+            
+            self.loginButton.isHidden = true
+            self.signUpButton.isHidden = true
+            self.lblSignUp.isHidden = true
+        }
+        else
+        {
+            self.loginButton.isHidden = false
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        checkLogin()
     }
     
 

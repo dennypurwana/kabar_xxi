@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-2551441341997407~4062270142</string>
+	<key>FirebaseScreenReportingEnabled</key>
+	<false/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>GADIsAdManagerApp
+&lt;true/&gt;</key>
+	<true/>
 	<key>Application Transport Security</key>
 	<false/>
 	<key>CFBundleDevelopmentRegion</key>

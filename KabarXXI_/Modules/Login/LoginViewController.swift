@@ -49,7 +49,9 @@ class LoginViewController: UIViewController , UITextFieldDelegate{
                     if(response.statusCode == 200){
                         
                         print(responseLogin.access_token ?? "")
-                        
+                    UserDefaults.standard.setValue(responseLogin.access_token ?? "", forKey: "accessToken")
+                        UserDefaults.standard.setValue(true, forKey: "isLogin")
+                        UserDefaults.standard.synchronize()
                         self.showProfileViewController()
                         
                     } else {

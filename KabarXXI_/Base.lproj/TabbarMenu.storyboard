@@ -225,6 +225,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
+                        <outlet property="lblSignUp" destination="vsh-dj-XV0" id="dtJ-Xk-I3Y"/>
                         <outlet property="loginButton" destination="lEQ-sl-a12" id="2dV-Ni-WVO"/>
                         <outlet property="signUpButton" destination="tCA-ha-wEH" id="Jld-k1-3gN"/>
                     </connections>

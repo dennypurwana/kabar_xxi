@@ -1,6 +1,11 @@
 PODS:
   - Alamofire (4.8.2)
   - CarbonKit (2.2.2)
+  - Firebase (5.20.2):
+    - Firebase/Core (= 5.20.2)
+  - Firebase/AdMob (5.20.2):
+    - Firebase/Core
+    - Google-Mobile-Ads-SDK (~> 7.42)
   - Firebase/Core (5.20.2):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.8.1)
@@ -35,6 +40,8 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 5.3)
     - Protobuf (~> 3.1)
   - Floaty (4.1.0)
+  - Google-Mobile-Ads-SDK (7.42.2):
+    - GoogleAppMeasurement (~> 5.7)
   - GoogleAppMeasurement (5.8.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -139,9 +146,12 @@ PODS:
 
 DEPENDENCIES:
   - CarbonKit
+  - Firebase
+  - Firebase/AdMob
   - Firebase/Core
   - Firebase/Messaging
   - Floaty (~> 4.1.0)
+  - Google-Mobile-Ads-SDK
   - KeychainSwift (~> 14.0)
   - Kingfisher (~> 4.0)
   - MaterialComponents/Buttons
@@ -162,6 +172,7 @@ SPEC REPOS:
     - FirebaseInstanceID
     - FirebaseMessaging
     - Floaty
+    - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUtilities
     - KeychainSwift
@@ -189,6 +200,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: a122b0c258720cf250551bb2bedf48c699f80d90
   FirebaseMessaging: 4235f949ce1c4e827aeb19705ba5c53f9b85aa10
   Floaty: 1a4e213f3512cf3045ef9cb0c1ff456226d1f66a
+  Google-Mobile-Ads-SDK: 8f4f7e793bfd3fff5b082181b54112f81b579a67
   GoogleAppMeasurement: ffe513e90551844a739e7bcbb1d2aca1c28a4338
   GoogleUtilities: f44b068df02195da10409f415bd8c98439cd70fa
   KeychainSwift: d3cce449feb5198907aa3c50ae7409fdbd9d3e20
@@ -206,6 +218,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: c132d6d5851daff229ab4a1060ccf70a05a051c9
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 11338b23fbcace2260a29412c1cf09cda12e3434
+PODFILE CHECKSUM: 36568ad48eb1422458c51f9bdb35d4ef32cd115a
 
 COCOAPODS: 1.7.0.beta.3

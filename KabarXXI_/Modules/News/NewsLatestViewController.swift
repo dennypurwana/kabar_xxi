@@ -6,12 +6,21 @@ import UIScrollView_InfiniteScroll
 import RealmSwift
 import CoreSpotlight
 import MobileCoreServices
+import Firebase
 
-class NewsLatestViewController: UITableViewController {
+class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoaderDelegate{
 
     @IBOutlet var newsTableView: UITableView!
     
-     var newsArray: [News] = []
+    
+    let adUnitID = "ca-app-pub-3940256099942544/3986624511"
+    
+    /// The number of native ads to load (must be less than 5).
+    let numAdsToLoad = 5
+    var nativeAds = [GADUnifiedNativeAd]()
+      var adLoader: GADAdLoader!
+      var tableViewItems : [Any] = []
+      var newsArray: [News] = []
     
      var refreshControl_: UIRefreshControl?
     
@@ -23,12 +32,12 @@ class NewsLatestViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let tes : String = "denny21121993"
-        print("md 5 :\(String(describing: tes.encryptToMD5!))")
+       
+        registerCell()
         setupViews()
         refreshControl_!.beginRefreshing()
         loadNews(page)
+        setupAds()
 
     }
     
@@ -43,6 +52,30 @@ class NewsLatestViewController: UITableViewController {
         
     }
     
+    func registerCell(){
+        
+        tableView.register(UINib(nibName: "NewsItemTableViewCell", bundle: nil),forCellReuseIdentifier:  "NewsItemTableViewCell")
+        
+        tableView.register(UINib(nibName: "NewsHeaderTableViewCell", bundle: nil),forCellReuseIdentifier:  "NewsHeaderTableViewCell")
+        
+        tableView.register(UINib(nibName: "UnifiedNativeAdCell", bundle: nil),
+            forCellReuseIdentifier: "UnifiedNativeAdCell")
+    }
+    
+    func setupAds(){
+        
+        let options = GADMultipleAdsAdLoaderOptions()
+        options.numberOfAds = numAdsToLoad
+        adLoader = GADAdLoader(adUnitID: adUnitID,
+                               rootViewController: self,
+                               adTypes: [.unifiedNative],
+                               options: [options])
+        adLoader.delegate = self
+        let request = GADRequest()
+        request.testDevices = [kGADSimulatorID]
+        adLoader.load(request)
+        
+    }
     
     func setupViews() {
         
@@ -58,9 +91,6 @@ class NewsLatestViewController: UITableViewController {
             return self.page < self.totalPage
         }
         
-        
-        
-       // self.loadNews()
     }
     
     func loadNews(_ page:Int) {
@@ -77,13 +107,17 @@ class NewsLatestViewController: UITableViewController {
                         response.data)
                     
                     if page == 0 {
-                        self?.newsArray = responses.data
+                       
+                          self?.tableViewItems = responses.data
+                       
                     }
                     else {
-                        self?.newsArray.append(contentsOf: responses.data)
+                       
+                        self?.tableViewItems.append(contentsOf: responses.data)
+
                     }
                     
-                    self?.totalPage = self?.newsArray.count ?? 0/10
+                    self?.totalPage = self?.tableViewItems.count ?? 0/10
                     self?.page = page
                     self?.newsTableView.reloadData()
                     
@@ -102,45 +136,76 @@ class NewsLatestViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsArray.count
+        print(tableViewItems.count)
+        return tableViewItems.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      
         
-       if  indexPath.row == 0 {
+        
+    if let nativeAd = tableViewItems[indexPath.row] as? GADUnifiedNativeAd {
+       
+        nativeAd.rootViewController = self
+        
+        let nativeAdCell = tableView.dequeueReusableCell(
+            withIdentifier: "UnifiedNativeAdCell", for: indexPath)
+        
+        let adView : GADUnifiedNativeAdView = nativeAdCell.contentView.subviews
+            .first as! GADUnifiedNativeAdView
+    
+        adView.nativeAd = nativeAd
+        
+        (adView.headlineView as! UILabel).text = nativeAd.headline
+        (adView.priceView as! UILabel).text = nativeAd.price
+        if let starRating = nativeAd.starRating {
+            (adView.starRatingView as! UILabel).text =
+                starRating.description + "\u{2605}"
+        } else {
+            (adView.starRatingView as! UILabel).text = nil
+        }
+        (adView.bodyView as! UILabel).text = nativeAd.body
+        (adView.advertiserView as! UILabel).text = nativeAd.advertiser
+        (adView.callToActionView as! UIButton).isUserInteractionEnabled = false
+         (adView.callToActionView as! UIButton).setTitle(
+           nativeAd.callToAction, for: UIControl.State.normal)
+        
+        return nativeAdCell
+        
+        }
+    else
+    
+    {
+        let news_ = tableViewItems[indexPath.row] as? News
+        
+        if  indexPath.row == 0 {
             
-            self.newsTableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
-            print("tes",indexPath.row)
-            let cell = Bundle.main.loadNibNamed("NewsHeaderTableViewCell", owner: self, options: nil)?.first as! NewsHeaderTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NewsHeaderTableViewCell",for: indexPath) as! NewsHeaderTableViewCell
             
-            let news_ = newsArray[indexPath.row]
-            print(news_.title as Any)
-            let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image)"
+            let imageUrl = Constant.ApiUrlImage+"\(news_?.base64Image  ?? "")"
             cell.imageNews.kf.setImage(with: URL(string: imageUrl))
-            cell.titleNews.text = news_.title
-            cell.dateNews.text = news_.createdDate
-            cell.totalViews.text = "\(news_.views!) dilihat"
+            cell.titleNews.text = news_?.title ?? ""
+            cell.dateNews.text = news_?.createdDate ?? ""
+            cell.totalViews.text = "\(news_?.views! ?? 0 ) dilihat"
             
             return cell
             
-        } else {
+        }
+        else {
             
-        self.newsTableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
-        
-        print("tes > 0",newsArray.count)
-        let cell = Bundle.main.loadNibNamed("NewsItemTableViewCell", owner: self, options: nil)?.first as! NewsItemTableViewCell
-        
-        let news_ = newsArray[indexPath.row]
-        let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image)"
-        cell.imageNews.kf.setImage(with: URL(string: imageUrl))
-        cell.titleNews.text = news_.title
-        cell.dateNews.text = news_.createdDate
-        cell.totalViews.text = "\(news_.views!) dilihat"
-        
-        return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NewsItemTableViewCell",for: indexPath) as! NewsItemTableViewCell
             
+            let imageUrl = Constant.ApiUrlImage+"\(news_?.base64Image  ?? "")"
+            cell.imageNews.kf.setImage(with: URL(string: imageUrl))
+            cell.titleNews.text = news_?.title ?? ""
+            cell.dateNews.text = news_?.createdDate ?? ""
+            cell.totalViews.text = "\(news_?.views! ?? 0 ) dilihat"
+            
+            return cell
+            
+        }
+       
+        
         }
         
     }
@@ -167,6 +232,38 @@ class NewsLatestViewController: UITableViewController {
     }
     
 
+    func addNativeAds() {
+        if nativeAds.count <= 0 {
+            return
+        }
+        
+        let adInterval = 4
+        var index = 0
+        for nativeAd in nativeAds {
+            if index < tableViewItems.count {
+                tableViewItems.insert(nativeAd, at: index)
+                index += adInterval
+            } else {
+                break
+            }
+        }
+    }
+    // MARK: - GADAdLoaderDelegate
+    
+    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
+        print("\(adLoader) failed with error: \(error.localizedDescription)")
+    }
+    
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
+        print("Received native ad: \(nativeAd)")
+        
+        // Add the native ad to the list of native ads.
+        nativeAds.append(nativeAd)
+    }
+    
+    func adLoaderDidFinishLoading(_ adLoader: GADAdLoader) {
+        addNativeAds()
+    }
 
 }
 

@@ -19,6 +19,9 @@ target 'KabarXXI_' do
   pod 'Floaty', '~> 4.1.0'
   pod 'MaterialComponents/Buttons'
   pod 'MaterialComponents/Buttons+ButtonThemer'
+  pod 'Firebase'
+  pod 'Firebase/AdMob'
+  pod 'Google-Mobile-Ads-SDK'
 
 
   target 'KabarXXI_Tests' do
