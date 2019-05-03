@@ -11,11 +11,18 @@ import Foundation
 import Foundation
 struct Video : Codable {
     
-    let id:Int
-    let thumbnail:String
-    let duration:String
-    let title:String
-    let video:String
+    let id:Int?
+    let thumbnail:String?
+    let duration:String?
+    let title:String?
+    let video:String?
+    let createdDate:String?
+    let updatedDate:String?
+    let description:String?
+    let base64Video:String?
+    let mimeType:String?
+    let base64Thumbnail:String?
+    let mimeTypeThumbnail:String?
     
     
 }

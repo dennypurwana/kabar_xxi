@@ -50,9 +50,9 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="347" height="119"/>
             <connections>
-                <outlet property="duration" destination="seN-Iz-Wa5" id="8NK-rI-EC3"/>
-                <outlet property="thumbnail" destination="KL2-gb-fly" id="ET7-Ab-kFu"/>
-                <outlet property="title" destination="l7n-Ta-70X" id="Lm1-mW-4Sp"/>
+                <outlet property="durationVideo" destination="seN-Iz-Wa5" id="h9R-xU-2EC"/>
+                <outlet property="thumbnailVideo" destination="KL2-gb-fly" id="oZf-ei-6xo"/>
+                <outlet property="titleVideo" destination="l7n-Ta-70X" id="YZ4-hi-JZR"/>
             </connections>
             <point key="canvasLocation" x="216.80000000000001" y="96.7016491754123"/>
         </collectionViewCell>

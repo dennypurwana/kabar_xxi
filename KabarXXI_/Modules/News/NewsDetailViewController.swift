@@ -13,6 +13,21 @@ import Floaty
 class NewsDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate   {
     
     
+    let floaty = Floaty()
+    
+    var newsArray: [News] = []
+    var keyword: String?
+    var titleNews_: String?
+    var newsDescriptions_: String?
+    var imageNews_ : String = ""
+    var createdDate_ : String = ""
+    var category_ : String = ""
+    var idNews_:Int = 0
+    var releaseDate: Date = Date(timeIntervalSince1970: 0)
+    
+    
+    @IBOutlet var commentButton: UITableView!
+    
     @IBOutlet var relatedNewsTableView: UITableView!
     
     @IBOutlet var imageNews: UIImageView!
@@ -25,18 +40,12 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
     
     @IBOutlet var category: UILabel!
     
-    @IBOutlet var floaty: Floaty!
-    let floaty_ = Floaty()
+    @IBAction func commentButtonTapped(_ sender: Any) {
+        
+        self.showCommentViewController(with: idNews_)
+        
+    }
     
-    var newsArray: [News] = []
-    var keyword: String?
-    var titleNews_: String?
-    var newsDescriptions_: String?
-    var imageNews_ : String = ""
-    var createdDate_ : String = ""
-    var category_ : String = ""
-    var idNews_:Int = 0
-    var releaseDate: Date = Date(timeIntervalSince1970: 0)
 
     override func viewDidLoad() {
         
@@ -52,16 +61,13 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
         self.navigationItem.title = "Detail Berita"
         titleNews.text = titleNews_
         descNews.htmlToString(html: newsDescriptions_ ?? "")
-        releaseDate = createdDate_.date(with: "yyyy-MM-dd")
-        createdDate.text = releaseDate.string(with: "yyyy-MM-dd")
+        createdDate.text = createdDate_
         category.text = category_
         let imageUrl = Constant.ApiUrlImage+"\(imageNews_)"
-        imageNews.kf.setImage(with: URL(string: imageUrl))
-        floaty.addItem(title: "Komentar")
-        floaty.addItem(title: "Share")
-        self.view.addSubview(floaty)
+        imageNews.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "default_image"))
         updateViews(idNews_)
         loadNews(keyword ?? "")
+        
         
         
     }
@@ -80,7 +86,7 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        loadNews(keyword ?? "")
+        //loadNews(keyword ?? "")
     }
     
     
@@ -114,7 +120,7 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
                     let responses = try decoder.decode(NewsResponse.self, from:
                         response.data)
                     print(responses)
-                    self?.newsArray = responses.data
+                    self?.newsArray = responses.data ?? []
                     self?.relatedNewsTableView.reloadData()
                     
                 } catch let parsingError {
@@ -153,7 +159,7 @@ class NewsDetailViewController: UIViewController, UITableViewDataSource, UITable
         
         let newsData = newsArray[indexPath.item]
         
-        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image, with: newsData.description,with: newsData.keyword,with:newsData.category?.categoryName ?? "")
+        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image!, with: newsData.description ?? "",with: newsData.keyword ?? "",with:newsData.category?.categoryName ?? "")
         
     }
     

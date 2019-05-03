@@ -11,9 +11,12 @@ enum NewsServices{
     case getMainNews(Int)
     case getPopularNews(Int)
     case getCategory()
+    case getNotifications()
     case getRelatedNews(keyword:String)
     case getNewsByCategory(page:Int,categoryName:String)
+    case searchNews(page:Int,searchValue:String,categoryName:String)
     case updateViews(Int)
+    
     
 }
 
@@ -27,6 +30,9 @@ extension NewsServices :TargetType{
        
         case .getLatestNews:
             return "/public/v1/news/latest"
+            
+        case .getNotifications:
+            return "/public/v1/pushNotification"
        
         case .getMainNews:
             return "/public/v1/news/main"
@@ -39,7 +45,10 @@ extension NewsServices :TargetType{
             
         case .getNewsByCategory( _,let categoryName):
             return "/public/v1/news/newsByCategory/\(categoryName)"
-       
+            
+        case .searchNews(_, let searchValue, let categoryName):
+           return "/public/v1/news/searchNews/\(searchValue)/\(categoryName)"
+            
         case .getCategory:
             return "/public/v1/category"
             
@@ -111,6 +120,13 @@ extension NewsServices :TargetType{
             )
             
             
+        case .getNotifications():
+            return .requestParameters(
+                parameters: [:],
+                encoding: URLEncoding.default
+            )
+            
+            
         
         case .getRelatedNews(_):
             let parameters: [String: Any] =
@@ -127,6 +143,16 @@ extension NewsServices :TargetType{
                     "sort": "createdDate,DESC",
                     "size": 10,
                     "page": page
+                    
+                ],
+                encoding: URLEncoding.default
+            )
+            
+        case .searchNews( _, _, _):
+            return .requestParameters(
+                parameters: [
+                    
+                    :
                     
                 ],
                 encoding: URLEncoding.default

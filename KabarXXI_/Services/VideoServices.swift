@@ -13,14 +13,14 @@ enum VideoServices{
 
 extension VideoServices :TargetType{
     var baseURL: URL {
-        return URL(string: Constant.ApiUrlLocal)!
+        return URL(string: Constant.ApiUrl)!
     }
     
     var path: String {
         switch self {
             
         case .getVideo:
-            return "/getVideo.php"
+            return "/public/v1/video"
             
         }
     }

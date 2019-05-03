@@ -16,18 +16,18 @@ struct News : Codable {
     let category:Category?
     let id:Int?
     let title:String?
-    let releaseDate:String
-    let base64Image:String
-    let mimeType:String
-    let active:Bool
-    let main:Bool
-    let popular:Bool
-    let keyword:String
-    let description:String
+    let releaseDate:String?
+    let base64Image:String?
+    let mimeType:String?
+    let active:Bool?
+    let main:Bool?
+    let popular:Bool?
+    let keyword:String?
+    let description:String?
     let createdBy:String?
     let updateBy:String?
     let releaseBy:String?
-    let views: Int!
+    let views: Int?
     
     
    

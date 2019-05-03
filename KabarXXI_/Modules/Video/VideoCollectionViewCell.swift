@@ -11,22 +11,22 @@ import Kingfisher
 
 class VideoCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet var thumbnail: UIImageView!
-    @IBOutlet var title: UILabel!
-    @IBOutlet var duration: UILabel!
-    
+    @IBOutlet var titleVideo: UILabel!
+    @IBOutlet var thumbnailVideo: UIImageView!
+    @IBOutlet var durationVideo: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    public func configure(with model: Video) {
+    public func configure(with video: Video) {
        
-        let imageUrl = Constant.ApiUrlLocal+"/images/\(model.thumbnail)"
-        thumbnail.kf.setImage(with: URL(string: imageUrl))
-        title.text = model.title
-        duration.text = model.duration
+        let imageUrl = Constant.ApiUrlImage+"\(video.base64Thumbnail ?? "")"
+        thumbnailVideo.kf.setImage(with: URL(string: imageUrl),placeholder: UIImage(named: "default_image"))
+        titleVideo.text = video.title ?? ""
+        durationVideo.text = video.duration ?? ""
+      
         
         
     }

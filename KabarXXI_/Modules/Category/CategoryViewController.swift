@@ -17,10 +17,8 @@ class CategoryViewController: UIViewController , UICollectionViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Category"
-        collectionViewCategory.delegate = self as? UICollectionViewDelegate
+        collectionViewCategory.delegate = self 
         collectionViewCategory.dataSource = self
-       // setupViews()
-       // refreshControl.beginRefreshing()
         loadCategories()
     }
     
@@ -43,10 +41,10 @@ class CategoryViewController: UIViewController , UICollectionViewDataSource {
                     let decoder = JSONDecoder()
                     let responses = try decoder.decode(CategoryResponse.self, from:
                         response.data)
-                    print(responses)
-                    self?.categoryArray = responses.data
+                  
+                    self?.categoryArray = responses.data ?? []
                     self?.collectionViewCategory.reloadData()
-                    print("refreshhh category")
+                   
                 } catch let parsingError {
                     print("Error", parsingError)
                 }
@@ -72,9 +70,8 @@ class CategoryViewController: UIViewController , UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryCollectionViewCell
         
         let category_ = categoryArray[indexPath.row]
-        print(category_.description)
-        let imageUrl = Constant.ApiUrlImage+"\(category_.base64Image)"
-        cell.categoryImage.kf.setImage(with: URL(string: imageUrl))
+        let imageUrl = Constant.ApiUrlImage+"\(category_.base64Image ?? "")"
+        cell.categoryImage.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "default_image"))
         cell.categoryLabel.text = category_.categoryName
 
         return cell
@@ -84,7 +81,7 @@ class CategoryViewController: UIViewController , UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let categoryData = categoryArray[indexPath.item]
-        showNewsByCategoryController(with: categoryData.categoryName )
+        showNewsByCategoryController(with: categoryData.categoryName ?? "" )
         
     }
     
@@ -106,39 +103,5 @@ class CategoryViewController: UIViewController , UICollectionViewDataSource {
     }
     
 }
-
-
-
-
-
-//
-//extension CategoryViewController : UICollectionViewDelegateFlowLayout {
-//    //1
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        //2
-//        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-//        let availableWidth = view.frame.width - paddingSpace
-//        let widthPerItem = availableWidth / itemsPerRow
-//
-//        return CGSize(width: widthPerItem, height: widthPerItem)
-//    }
-//
-//    //3
-//    override func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return sectionInsets
-//    }
-//
-//    // 4
-//    override func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return sectionInsets.left
-//    }
-//}
-
 
 

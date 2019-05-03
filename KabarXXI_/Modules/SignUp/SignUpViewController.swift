@@ -46,6 +46,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate{
                     print(responseRegister)
 
                     if (responseRegister.status == 200){
+                      
                         let  alert = UIAlertController(title: "Info", message:                 responseRegister.message, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
                             alert.dismiss(animated: true, completion: nil)

@@ -22,6 +22,7 @@ target 'KabarXXI_' do
   pod 'Firebase'
   pod 'Firebase/AdMob'
   pod 'Google-Mobile-Ads-SDK'
+  pod 'DropDown'
 
 
   target 'KabarXXI_Tests' do

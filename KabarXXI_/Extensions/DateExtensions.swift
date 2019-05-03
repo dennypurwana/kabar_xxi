@@ -10,10 +10,38 @@ import Foundation
 
 extension Date {
     
-    func string(with format: String) -> String {
+    static func getFormattedDate(string: String , formatter:String) -> String{
+       
+        if(!string.isEmpty) {
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        return dateFormatter.string(from: self)
+            
+//        let dateFormatterGet = DateFormatter()
+//        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+//
+//        let dateFormatterPrint = DateFormatter()
+//        dateFormatterPrint.dateFormat = "dd-MM-yyyy"
+//
+//
+//            let date: Date? = dateFormatterGet.date(from:string)
+//
+//            print("datenyayeuh : \(date!)")
+//            if date == nil {
+//                return ""
+//            }
+//            else {
+//
+//                return dateFormatterPrint.string(from: date!);
+//            }
+            
+            return ""
+    
+        }
+        else {
+            
+             print("b")
+            
+            return ""
+            
+        }
     }
 }

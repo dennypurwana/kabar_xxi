@@ -31,10 +31,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="bookmark" translatesAutoresizingMaskIntoConstraints="NO" id="zHD-Z9-Quf">
-                        <rect key="frame" x="283" y="68" width="15" height="15"/>
-                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dadasda" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lpm-V3-lZs">
                         <rect key="frame" x="97" y="36" width="193" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -54,6 +50,13 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QmU-33-Cxb">
+                        <rect key="frame" x="260" y="60" width="30" height="30"/>
+                        <state key="normal" image="bookmark"/>
+                        <connections>
+                            <action selector="saveBookmark:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vsz-Td-GsJ"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="qMe-f0-CSl" firstAttribute="centerY" secondItem="ydv-qh-g8g" secondAttribute="centerY" id="10n-Sv-89o"/>
@@ -64,23 +67,23 @@
                     <constraint firstAttribute="bottomMargin" secondItem="qMe-f0-CSl" secondAttribute="bottom" constant="8" id="MN9-Wo-L1o"/>
                     <constraint firstAttribute="trailing" secondItem="lbH-xL-nMd" secondAttribute="trailing" constant="29" id="V52-zN-8tM"/>
                     <constraint firstItem="hue-GA-R8T" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Z2a-cm-OIb"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="zHD-Z9-Quf" secondAttribute="bottom" constant="5" id="aqD-um-i7e"/>
                     <constraint firstItem="lpm-V3-lZs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="97" id="bV9-mV-Too"/>
                     <constraint firstItem="lpm-V3-lZs" firstAttribute="leading" secondItem="lbH-xL-nMd" secondAttribute="trailing" constant="-193" id="dFH-Jm-k9V"/>
                     <constraint firstAttribute="bottom" secondItem="ydv-qh-g8g" secondAttribute="bottom" constant="15.5" id="eQm-7j-CGB"/>
                     <constraint firstItem="hue-GA-R8T" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="g9E-hX-wVB"/>
                     <constraint firstItem="lbH-xL-nMd" firstAttribute="leading" secondItem="hue-GA-R8T" secondAttribute="trailing" constant="8" id="gZk-3G-tob"/>
+                    <constraint firstAttribute="trailing" secondItem="QmU-33-Cxb" secondAttribute="trailing" constant="29" id="o3S-g7-dMm"/>
                     <constraint firstItem="lbH-xL-nMd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="pi6-fk-bUr"/>
+                    <constraint firstAttribute="bottom" secondItem="QmU-33-Cxb" secondAttribute="bottom" constant="8.5" id="rP9-Sb-QuT"/>
                     <constraint firstItem="lpm-V3-lZs" firstAttribute="trailing" secondItem="lbH-xL-nMd" secondAttribute="trailing" id="wSD-Wy-vJE"/>
-                    <constraint firstItem="qMe-f0-CSl" firstAttribute="centerY" secondItem="zHD-Z9-Quf" secondAttribute="centerY" id="xYj-8E-Mew"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="zHD-Z9-Quf" secondAttribute="trailing" constant="5" id="xby-w0-ib7"/>
                     <constraint firstItem="qMe-f0-CSl" firstAttribute="leading" secondItem="lpm-V3-lZs" secondAttribute="leading" id="zsj-OR-yOz"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="bookmarkButton" destination="QmU-33-Cxb" id="syW-cl-scq"/>
                 <outlet property="dateNews" destination="lpm-V3-lZs" id="BP4-JW-CVz"/>
-                <outlet property="imageNews" destination="hue-GA-R8T" id="dej-EP-hsw"/>
+                <outlet property="imageNews" destination="hue-GA-R8T" id="3a2-3F-zkG"/>
                 <outlet property="titleNews" destination="lbH-xL-nMd" id="rQ1-26-4G7"/>
                 <outlet property="totalViews" destination="ydv-qh-g8g" id="zzU-j4-giZ"/>
             </connections>

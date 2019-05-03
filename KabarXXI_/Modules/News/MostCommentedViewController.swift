@@ -5,32 +5,72 @@ class MostCommentedViewController: UITableViewController {
     @IBOutlet var mostCommentTableView: UITableView!
     
     var newsArray: [News] = []
+    var refreshControl_: UIRefreshControl?
+    var totalPage = 0
+    var page = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadNews()
-       
+        
+        setupViews()
+        refreshControl_!.beginRefreshing()
+        loadNews(page)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadNews()
+        loadNews(page)
     }
     
-    func loadNews() {
-         let page:Int = 0
-        newsProviderServices.request(.getLatestNews(page)) { [weak self] result in
-            guard case self = self else { return }
+    @objc func refresh(_ sender: UIRefreshControl) {
         
+        loadNews(page)
+        
+    }
+    
+    
+    func setupViews() {
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        mostCommentTableView.addSubview(refreshControl)
+        self.refreshControl_ = refreshControl
+        mostCommentTableView.addInfiniteScroll { (tipsTableView) in
+            self.loadNews(self.page + 1)
+        }
+        
+        mostCommentTableView.setShouldShowInfiniteScrollHandler { (tipsTableView) -> Bool in
+            return self.page < self.totalPage
+        }
+        
+    }
+    
+    func loadNews(_ page:Int) {
+        newsProviderServices.request(.getNewsByCategory(page: page,categoryName: "Opini")) { [weak self] result in
+            guard case self = self else { return }
+            
+            // 3
             switch result {
             case .success(let response):
                 do {
+                    
                     let decoder = JSONDecoder()
                     let responses = try decoder.decode(NewsResponse.self, from:
                         response.data)
-                    self?.newsArray = responses.data
+                    
+                    if page == 0 {
+                        self?.newsArray = responses.data ?? []
+                    }
+                    else {
+                        
+                        self?.newsArray.append(contentsOf: responses.data ?? [])
+                    }
+                    
+                    self?.totalPage = self?.newsArray.count ?? 0/10
+                    self?.page = page
                     self?.mostCommentTableView.reloadData()
-                
+                    
                 } catch let parsingError {
                     print("Error", parsingError)
                 }
@@ -38,15 +78,11 @@ class MostCommentedViewController: UITableViewController {
             case .failure: break
             }
             
-            self?.refreshControl?.endRefreshing()
+            self?.refreshControl_?.endRefreshing()
             self?.mostCommentTableView.finishInfiniteScroll()
         }
         
     }
-    
-    
-    @objc func refresh(_ sender: UIRefreshControl) {
-        loadNews()    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return newsArray.count
@@ -61,8 +97,8 @@ class MostCommentedViewController: UITableViewController {
         
         let news_ = newsArray[indexPath.row]
         print(news_.title ?? "")
-        let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image)"
-        cell.imageNews.kf.setImage(with: URL(string: imageUrl))
+        let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image  ?? "")"
+        cell.imageNews.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "default_image"))
         cell.titleNews.text = news_.title
         cell.dateNews.text = news_.createdDate
         cell.totalViews.text = "\(news_.views!) dilihat"
@@ -76,7 +112,8 @@ class MostCommentedViewController: UITableViewController {
         
         let newsData = newsArray[indexPath.item]
         
-        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image, with: newsData.description,with:newsData.keyword,with:newsData.category?.categoryName ?? "")
+        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image ?? "" , with: newsData.description ?? "",with:newsData.keyword ?? "",
+            with:newsData.category?.categoryName ?? "")
         
     }
     

@@ -7,10 +7,12 @@ import RealmSwift
 import CoreSpotlight
 import MobileCoreServices
 import Firebase
+import GoogleMobileAds
 
-class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoaderDelegate{
+class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoaderDelegate {
 
     @IBOutlet var newsTableView: UITableView!
+    var interstitial: GADInterstitial!
     
     
     let adUnitID = "ca-app-pub-3940256099942544/3986624511"
@@ -38,6 +40,18 @@ class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoader
         refreshControl_!.beginRefreshing()
         loadNews(page)
         setupAds()
+        
+//        interstitial = createAndLoadInterstitial()
+//
+//        if interstitial.isReady {
+//
+//            interstitial.present(fromRootViewController: self)
+//
+//        } else {
+//
+//            print("Ad wasn't ready")
+//
+//        }
 
     }
     
@@ -77,6 +91,20 @@ class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoader
         
     }
     
+    
+//    func createAndLoadInterstitial() -> GADInterstitial {
+//        var interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+//        interstitial.delegate = self
+//        let request = GADRequest()
+//        request.testDevices = [kGADSimulatorID]
+//        interstitial.load(request)
+//        return interstitial
+//    }
+//
+//    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+//        interstitial = createAndLoadInterstitial()
+//    }
+    
     func setupViews() {
         
         let refreshControl = UIRefreshControl()
@@ -108,12 +136,12 @@ class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoader
                     
                     if page == 0 {
                        
-                          self?.tableViewItems = responses.data
+                        self?.tableViewItems = responses.data ?? []
                        
                     }
                     else {
                        
-                        self?.tableViewItems.append(contentsOf: responses.data)
+                        self?.tableViewItems.append(contentsOf: responses.data ?? [])
 
                     }
                     
@@ -136,7 +164,7 @@ class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoader
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(tableViewItems.count)
+       
         return tableViewItems.count
     }
 
@@ -181,25 +209,61 @@ class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoader
         if  indexPath.row == 0 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "NewsHeaderTableViewCell",for: indexPath) as! NewsHeaderTableViewCell
-            
+          
             let imageUrl = Constant.ApiUrlImage+"\(news_?.base64Image  ?? "")"
-            cell.imageNews.kf.setImage(with: URL(string: imageUrl))
+            cell.imageNews.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "default_image"))
             cell.titleNews.text = news_?.title ?? ""
-            cell.dateNews.text = news_?.createdDate ?? ""
+            cell.dateNews.text = news_?.createdDate
             cell.totalViews.text = "\(news_?.views! ?? 0 ) dilihat"
-            
             return cell
             
         }
         else {
-            
+           
             let cell = tableView.dequeueReusableCell(withIdentifier: "NewsItemTableViewCell",for: indexPath) as! NewsItemTableViewCell
-            
+          
             let imageUrl = Constant.ApiUrlImage+"\(news_?.base64Image  ?? "")"
-            cell.imageNews.kf.setImage(with: URL(string: imageUrl))
+            cell.imageNews.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "default_image"))
             cell.titleNews.text = news_?.title ?? ""
             cell.dateNews.text = news_?.createdDate ?? ""
             cell.totalViews.text = "\(news_?.views! ?? 0 ) dilihat"
+            
+           
+            cell.save = {
+               
+                if let data = UserDefaults.standard.value(forKey:"news") as? Data {
+                    
+                    self.newsArray = try! PropertyListDecoder().decode(Array<News>.self, from: data)
+                    
+                    self.newsArray.append(news_!)
+                    
+                    print(self.newsArray.count)
+                    
+                    UserDefaults.standard.set(try? PropertyListEncoder().encode(self.newsArray), forKey:"news")
+                    print("save bookmark > 1")
+                    
+                }
+                
+                else {
+                    
+                    UserDefaults.standard.set(try? PropertyListEncoder().encode([news_]), forKey:"news")
+                    print("save bookmark")
+                    
+                }
+                
+                /*if (newsDataPref != nil) {
+                    
+                     print("data exist")
+                }
+                else {
+                    
+                   UserDefaults.standard.set(try? PropertyListEncoder().encode([news_]), forKey:"news")
+                    
+                }
+              */
+               
+            
+            }
             
             return cell
             
@@ -213,9 +277,9 @@ class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoader
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let newsData = newsArray[indexPath.item]
+        let newsData = tableViewItems[indexPath.item] as! News
         
-        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image, with: newsData.description,with: newsData.keyword,with:newsData.category?.categoryName ?? "")
+        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image ?? "", with: newsData.description ?? "",with: newsData.keyword ?? "",with:newsData.category?.categoryName ?? "")
         
     }
     
@@ -238,7 +302,7 @@ class NewsLatestViewController: UITableViewController , GADUnifiedNativeAdLoader
         }
         
         let adInterval = 4
-        var index = 0
+        var index = 1
         for nativeAd in nativeAds {
             if index < tableViewItems.count {
                 tableViewItems.insert(nativeAd, at: index)

@@ -3,36 +3,130 @@
 import UIKit
 import CarbonKit
 import GoogleMobileAds
+import Firebase
 
 class HomeViewController: UIViewController
-, CarbonTabSwipeNavigationDelegate , GADInterstitialDelegate
+, CarbonTabSwipeNavigationDelegate , GADInterstitialDelegate, UISearchBarDelegate
 {
-   let items = ["Terbaru", "Berita Utama", "Berita Populer", "Opini","Tips"]
     
+    
+   let items = ["Terbaru", "Berita Utama", "Berita Populer", "Opini","Info & Tips"]
     
     var interstitial : GADInterstitial!
+    
+    var searching = false
+    var matches = [Int]()
+    let searchBar:UISearchBar = UISearchBar(frame: CGRect(x:0,y:0,width: 300,height: 0))
+    
+    var searchActive : Bool = false
+    var data = ["San Francisco","New York","San Jose","Chicago","Los Angeles","Austin","Seattle"]
+    var filtered:[String] = []
+    
+    var newsArray: [News] = []
+    var totalPage = 0
+    var page = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavBar()
         setupTabbarNews()
-        interstitial = createAndLoadIntertitial()
-        
-        if interstitial.isReady {
-            
-            interstitial.present(fromRootViewController: self)
-        
-        }
-        else {
-            
-            print("ads not ready")
-        }
+       
+//        interstitial = createAndLoadIntertitial()
+//
+//        if interstitial.isReady {
+//
+//            interstitial.present(fromRootViewController: self)
+//
+//        }
+//        else {
+//
+//            print("ads interstial not ready")
+//        }
       
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    private func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    private func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    private func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        print("Search text \(searchText)")
+       // loadNews(searchText)
+
+    }
+    
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+        print("interstitialDidReceiveAd")
+        interstitial = createAndLoadIntertitial()
+    }
+    
+    /// Tells the delegate an ad request failed.
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+        print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+    
+    /// Tells the delegate that an interstitial will be presented.
+    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
+        print("interstitialWillPresentScreen")
+        interstitial = createAndLoadIntertitial()
+    }
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        interstitial = createAndLoadIntertitial()
+    }
+    
+    /// Tells the delegate that a user click will open another app
+    /// (such as the App Store), backgrounding the current app.
+    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
+        print("interstitialWillLeaveApplication")
+        interstitial = createAndLoadIntertitial()
+    }
+    
+    func loadNews(_ searchValue:String) {
+        newsProviderServices.request(.searchNews(page: 0,searchValue: searchValue,categoryName: "all")) { [weak self] result in
+            guard case self = self else { return }
+            
+            // 3
+            switch result {
+            case .success(let response):
+                do {
+                    
+                    let decoder = JSONDecoder()
+                    let responses = try decoder.decode(NewsResponse.self, from:
+                        response.data)
+                    
+                    print("response search : \(responses)")
+                    
+        
+                } catch let parsingError {
+                    print("Error", parsingError)
+                }
+                
+            case .failure: break
+            }
+            
+        }
+        
+    }
+    
+    
     func createAndLoadIntertitial() -> GADInterstitial{
         
-        var intertitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/3986624511")
+        let intertitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
         intertitial.delegate = self
         let request = GADRequest()
         request.testDevices = [kGADSimulatorID]
@@ -42,20 +136,22 @@ class HomeViewController: UIViewController
         
     }
     
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        interstitial = createAndLoadIntertitial()
-    }
+
     
     func setupNavBar(){
         
+           searchBar.delegate = self
             let logoImage = UIImage.init(named: "logo_kabar")
             let logoImageView = UIImageView.init(image: logoImage)
-            logoImageView.frame = CGRect(x: 0, y: 0, width: 100, height: 10)
+            logoImageView.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
             logoImageView.contentMode = .scaleAspectFit
             let imageItem = UIBarButtonItem.init(customView: logoImageView)
             let negativeSpacer = UIBarButtonItem.init(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
             negativeSpacer.width = -25
-            navigationItem.leftBarButtonItems = [negativeSpacer, imageItem]
+           self.navigationItem.leftBarButtonItems = [negativeSpacer, imageItem]
+            searchBar.placeholder = "search news"
+            let rightNavBarButton = UIBarButtonItem(customView:searchBar)
+            self.navigationItem.rightBarButtonItem = rightNavBarButton
         
     }
     
@@ -105,7 +201,7 @@ class HomeViewController: UIViewController
             
         else {
             
-            let newsTips = UIStoryboard(name: "News", bundle: nil).instantiateViewController(withIdentifier: "newsTips")
+            let newsTips = UIStoryboard(name: "News", bundle: nil).instantiateViewController(withIdentifier: "categoryNews")
             return newsTips
             
         }

@@ -9,7 +9,11 @@
 import UIKit
 
 class NewsCommentViewCell: UITableViewCell {
-
+    
+    @IBOutlet var imageProfile: UIImageView!
+    @IBOutlet var username: UILabel!
+    @IBOutlet var descComment: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

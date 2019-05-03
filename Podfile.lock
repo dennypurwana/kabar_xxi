@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.8.2)
   - CarbonKit (2.2.2)
+  - DropDown (2.3.13)
   - Firebase (5.20.2):
     - Firebase/Core (= 5.20.2)
   - Firebase/AdMob (5.20.2):
@@ -146,6 +147,7 @@ PODS:
 
 DEPENDENCIES:
   - CarbonKit
+  - DropDown
   - Firebase
   - Firebase/AdMob
   - Firebase/Core
@@ -165,6 +167,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - CarbonKit
+    - DropDown
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -193,6 +196,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   CarbonKit: 0dec4738fa489b4c043a5f850c27fd0dbefb57cc
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
   FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
@@ -218,6 +222,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: c132d6d5851daff229ab4a1060ccf70a05a051c9
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 36568ad48eb1422458c51f9bdb35d4ef32cd115a
+PODFILE CHECKSUM: 2e274883d8a0a57de97b6a5481cf4801c5df2288
 
 COCOAPODS: 1.7.0.beta.3

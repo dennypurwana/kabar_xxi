@@ -10,10 +10,18 @@ import UIKit
 
 class NewsItemTableViewCell: UITableViewCell {
     
-    @IBOutlet var totalViews: UILabel!
     @IBOutlet var imageNews: UIImageView!
+    @IBOutlet var bookmarkButton: UIButton!
+    @IBOutlet var totalViews: UILabel!
     @IBOutlet var titleNews: UILabel!
     @IBOutlet var dateNews: UILabel!
+    var save: (() -> Void)? = nil
+    
+    @IBAction func saveBookmark(_ sender: UIButton) {
+        
+         save?()
+        
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,4 +33,7 @@ class NewsItemTableViewCell: UITableViewCell {
 
     }
     
+//    @objc func connected(sender: UIButton){
+//        let buttonTag = sender.tag
+//    }
 }

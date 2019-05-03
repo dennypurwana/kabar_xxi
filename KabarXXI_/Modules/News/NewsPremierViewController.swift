@@ -69,10 +69,10 @@ class NewsPremierViewController: UITableViewController {
                         response.data)
                     
                     if page == 0 {
-                        self?.newsArray = responses.data
+                        self?.newsArray = responses.data  ?? []
                     }
                     else {
-                        self?.newsArray.append(contentsOf: responses.data)
+                        self?.newsArray.append(contentsOf: responses.data ?? [])
                     }
                     
                     self?.totalPage = self?.newsArray.count ?? 0/10
@@ -107,7 +107,7 @@ class NewsPremierViewController: UITableViewController {
             let news_ = newsArray[indexPath.row]
             print(news_.title ?? "")
             let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image)"
-            cell.imageNews.kf.setImage(with: URL(string: imageUrl))
+            cell.imageNews.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "default_image"))
             cell.titleNews.text = news_.title
             cell.dateNews.text = news_.createdDate
             cell.totalViews.text = "\(news_.views!) dilihat"
@@ -121,7 +121,7 @@ class NewsPremierViewController: UITableViewController {
         
         let newsData = newsArray[indexPath.item]
         
-        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image, with: newsData.description,with:newsData.keyword,with:newsData.category?.categoryName ?? "")
+        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image!, with: newsData.description ?? "",with:newsData.keyword ?? "",with:newsData.category?.categoryName ?? "")
         
     }
     

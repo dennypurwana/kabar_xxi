@@ -76,10 +76,10 @@ class MostPopularViewController: UITableViewController {
                         response.data)
                     
                     if page == 0 {
-                        self?.newsArray = responses.data
+                        self?.newsArray = responses.data ?? []
                     }
                     else {
-                        self?.newsArray.append(contentsOf: responses.data)
+                        self?.newsArray.append(contentsOf: responses.data ?? [])
                     }
                     
                     self?.totalPage = self?.newsArray.count ?? 0/10
@@ -111,8 +111,8 @@ class MostPopularViewController: UITableViewController {
         let cell = Bundle.main.loadNibNamed("NewsItemTableViewCell", owner: self, options: nil)?.first as! NewsItemTableViewCell
         
         let news_ = newsArray[indexPath.row]
-        let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image)"
-        cell.imageNews.kf.setImage(with: URL(string: imageUrl))
+        let imageUrl = Constant.ApiUrlImage+"\(news_.base64Image ?? "")"
+        cell.imageNews.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "default_image"))
         cell.titleNews.text = news_.title
         cell.dateNews.text = news_.createdDate
         cell.totalViews.text = "\(news_.views!) dilihat"
@@ -126,13 +126,13 @@ class MostPopularViewController: UITableViewController {
         
         let newsData = newsArray[indexPath.item]
         
-        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image, with: newsData.description,with:newsData.keyword,with:newsData.category?.categoryName ?? "" )
+        showDetailNewsController(with: newsData.id ?? 0,with: newsData.title ?? "", with: newsData.createdDate ?? "", with: newsData.base64Image ?? "", with: newsData.description ?? "",with:newsData.keyword ?? "",with:newsData.category?.categoryName ?? "" )
         
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 100
+        return 140
         
     }
     

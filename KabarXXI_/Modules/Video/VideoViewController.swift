@@ -93,7 +93,7 @@ class VideoViewController: UIViewController , UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
          let video = videoArray[indexPath.item]
-         playVideo(fileName: video.video)
+         playVideo(fileName: video.base64Video ?? "")
         //showLatestViewController()
         
     }
@@ -102,7 +102,7 @@ class VideoViewController: UIViewController , UICollectionViewDataSource{
     func playVideo(fileName:String ){
         
         print (fileName)
-        let url = Constant.ApiUrlLocal+"/videos/\(fileName)"
+        let url = Constant.ApiUrlVideo+"\(fileName)"
         let videoPathUrl = URL (fileURLWithPath: url)
         player = AVPlayer(url: videoPathUrl)
         playerViewController.player = player
